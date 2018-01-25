@@ -1,0 +1,29 @@
+{
+  "name": "front-end",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd-mobile": "^2.1.4",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.0"
+  },
+  "scripts": {
+    "start": "set PORT=9000&&react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.6.3",
+    "lib-flexible": "^0.3.2",
+    "node-sass": "^4.7.2",
+    "postcss-loader": "^2.0.10",
+    "postcss-px2rem": "^0.3.0",
+    "px2rem-loader": "^0.1.7",
+    "react-app-rewired": "^1.4.0",
+    "react-router-dom": "^4.2.2",
+    "sass-loader": "^6.0.6"
+  }
+}
