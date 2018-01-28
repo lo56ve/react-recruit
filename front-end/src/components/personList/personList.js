@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { NavBar } from 'antd-mobile'
 import './persionList.scss'
 
 import PersonCard from '../../components/personCard/personCard'
@@ -32,9 +31,6 @@ class PersionList extends Component {
                         ))
         return (
             <div>
-                <NavBar mode="dark">
-                    {this.state.status === 'seeker' ? 'BOSS' : '求职者'}列表
-                </NavBar>
                 {cards}
             </div>
         )

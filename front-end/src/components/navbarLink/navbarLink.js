@@ -9,7 +9,7 @@ class NavbarLink extends Component {
         super(props)
         this.state = {
             navData: [
-                {title: 'BOSS列表', value: 'home'},
+                {title: 'BOSS列表', value: 'boss'},
                 {title: '消息列表', value: 'msg'},
                 {title: '个人中心', value: 'user'}
             ],
