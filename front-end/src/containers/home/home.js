@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { NavBar } from 'antd-mobile'
 import { Route, Switch } from 'react-router-dom' 
 import './home.scss'
 
@@ -9,9 +8,9 @@ import User from '../../components/user/user'
 import NavbarTop from '../../components/navbarTop/navbarTop'
 
 class Home extends Component {
-    constructor(props){
-        super(props)
-    }
+    // constructor(props){
+    //     super(props)
+    // }
 
     render() {
         return (
