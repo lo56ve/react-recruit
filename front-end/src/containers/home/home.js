@@ -1,26 +1,21 @@
 import React, { Component } from 'react'
-import { NavBar } from 'antd-mobile'
 import { Route, Switch } from 'react-router-dom' 
 import './home.scss'
 
 import NavbarLink from '../../components/navbarLink/navbarLink'
 import PersonList from '../../components/personList/personList'
 import User from '../../components/user/user'
+import NavbarTop from '../../components/navbarTop/navbarTop'
 
 class Home extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            status: 'seeker'
-        }
-    }
+    // constructor(props){
+    //     super(props)
+    // }
 
     render() {
         return (
             <div className="home-wrap">
-                <NavBar mode="dark">
-                    {this.state.status === 'seeker' ? 'BOSS' : '求职者'}列表
-                </NavBar>
+                <NavbarTop />
                 <Switch>
                     <Route path={`${this.props.match.path}/personList`} component={PersonList}></Route>
                     <Route path={`${this.props.match.path}/user`} component={User}></Route>
