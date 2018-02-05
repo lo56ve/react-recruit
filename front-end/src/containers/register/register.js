@@ -2,15 +2,17 @@ import React, { Component } from 'react'
 import { List, InputItem, WingBlank, Button, WhiteSpace, Radio } from 'antd-mobile'
 import Logo from '../../components/logo/logo'
 import './register.scss'
+import store from '../../store/store'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { register } from '../../redux/user.redux'
 
 const RadioItem = Radio.RadioItem
 
 class Register extends Component {
     constructor (props) {
         super(props)
-        this.state = {
-            type: 'seeker'
-        }
+        this.state = {type: 'seeker', ...this.props.info}
     }
 
     render() {
@@ -21,8 +23,8 @@ class Register extends Component {
                 </div>
                 <WingBlank>
                     <List>
-                        <InputItem placeholder="">用户名</InputItem>
-                        <InputItem placeholder="">密码</InputItem>
+                        <InputItem placeholder="" value={this.state.name}>用户名</InputItem>
+                        <InputItem placeholder="" value={this.state.pwd}>密码</InputItem>
                         <InputItem placeholder="">确认密码</InputItem>
                     </List>
                     <WhiteSpace size="lg"/>
@@ -40,4 +42,17 @@ class Register extends Component {
     }
 }
 
-export default Register
+const mapStateToProps = state => {
+    return {info: state}
+}
+
+const mapDispatchToProps = dispatch =>{
+    return {
+        register: bindActionCreators(register, dispatch)
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Register)

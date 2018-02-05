@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { List, InputItem, WingBlank, Button, WhiteSpace } from 'antd-mobile'
 import './login.scss'
 import Logo from '../../components/logo/logo'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { login } from '../../redux/user.redux'
+import { loginIn } from '../../redux/user.redux'
 
 class Login extends Component {
     constructor (props) {
@@ -14,7 +15,8 @@ class Login extends Component {
         }
     }
 
-    jump() {
+    handleLoginIn() {
+        this.props.loginIn(this.state)
         this.props.history.push('/register')
     }
 
@@ -42,16 +44,27 @@ class Login extends Component {
                         <InputItem placeholder="" type="password" value={this.state.pwd} onChange={value => this.changePwd(value)}>密码</InputItem>
                     </List>
                     <WhiteSpace />
-                    <Button type="primary">登录</Button>
+                    <Button type="primary" onClick={() => this.handleLoginIn()}>登录</Button>
                     <WhiteSpace />
-                    <Button onClick={() => this.jump()}>注册</Button>
+                    <Button>注册</Button>
                 </WingBlank>
             </div>
         )
     }
 }
 
+// const mapStateToProps = state => {info: state}
+const mapStateToProps = (state) => {
+    return {info: state}
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginIn: bindActionCreators(loginIn, dispatch)
+    }
+}
+
 export default connect(
-    state => state.user,
-    {login}
+    mapStateToProps,
+    mapDispatchToProps
 )(Login)

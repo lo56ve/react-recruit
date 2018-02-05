@@ -3,31 +3,34 @@ const initState = {
     pwd: ''
 }
 
-const AUTH_SUCCESS = "AUTH_SUCCESS"
-const ERROR_MSG = "ERROR_MSG"
-const LOAD_DATA = "LOAD_DATA"
-const LOGOUT = "LOGOUT"
-
-const OK = "OK"
+const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 
 // reduce
 export function user(state = initState, action) {
     switch(action.type){
-        case OK:
-            return state
+        case LOGIN_SUCCESS:
+            return action.payload
         default: 
             return state
     }
 }
 
 // action create
-function hasName(data) {
+function hasLogin(data) {
     return {
-        type: "OK",
+        type: "LOGIN_SUCCESS",
         payload: data
     }
 }
 
-export function login({name, pwd}) {
-    hasName({name, pwd})
+export function loginIn(param){
+    return dispatch => {
+        dispatch(hasLogin(param))
+    }
+}
+
+export function register(param) {
+    return dispatch => {
+        dispatch(hasLogin(param))
+    }
 }
