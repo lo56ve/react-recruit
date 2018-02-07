@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { List, InputItem, WingBlank, Button, WhiteSpace } from 'antd-mobile'
+import { List, InputItem, WingBlank, Button, WhiteSpace, Toast } from 'antd-mobile'
 import './login.scss'
 import Logo from '../../components/logo/logo'
 import { bindActionCreators } from 'redux'
@@ -16,23 +16,33 @@ class Login extends Component {
         }
     }
 
+    hangleRegister() {
+        this.props.history.replace('/register')
+    }
+
     handleLoginIn() {
-        this.props.loginIn(this.state)
-        axios.get('/article', res => {
-            console.log(res)
-        })
+
     }
 
-    changeName(value) {
+    // 改变state的值
+    changeValue(type, value) {
         this.setState({
-            name: value
+            type: value
         })
-    }
-
-    changePwd(value){
-        this.setState({
-            pwd: value
-        })
+        switch(type) {
+            case 'name':
+                this.setState({
+                    name: value
+                })
+                break
+            case 'pwd':
+                this.setState({
+                    pwd: value
+                })
+                break
+            default:
+                console.log(type)
+        }
     }
 
     render () {
@@ -43,20 +53,19 @@ class Login extends Component {
                 </div>
                 <WingBlank>
                     <List>
-                        <InputItem placeholder="" value={this.state.name} onChange={value => this.changeName(value)}>用户</InputItem>
-                        <InputItem placeholder="" type="password" value={this.state.pwd} onChange={value => this.changePwd(value)}>密码</InputItem>
+                        <InputItem placeholder="" value={this.state.name} onChange={value => this.changeValue('name', value)}>用户</InputItem>
+                        <InputItem placeholder="" type="password" value={this.state.pwd} onChange={value => this.changeValue('pwd', value)}>密码</InputItem>
                     </List>
                     <WhiteSpace />
                     <Button type="primary" onClick={() => this.handleLoginIn()}>登录</Button>
                     <WhiteSpace />
-                    <Button>注册</Button>
+                    <Button onClick={() => this.hangleRegister()}>注册</Button>
                 </WingBlank>
             </div>
         )
     }
 }
 
-// const mapStateToProps = state => {info: state}
 const mapStateToProps = (state) => {
     return {info: state}
 }

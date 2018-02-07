@@ -5,6 +5,7 @@ const userSchema = mongoose.Schema({
     name: {type: String, require: true},
     pwd: {type: String, require: true},
     headUrl: String,
+    position: {type: String, require: true},
     create_at: {type: Date, default: Date.now}
 })
 

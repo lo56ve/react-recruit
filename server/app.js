@@ -3,10 +3,15 @@ const path = require('path')
 const static = require('koa-static')
 const bodyParser = require('koa-bodyparser')
 const Router = require('koa-router')
+const mongoose = require('mongoose')
 
 const router = require('./src/router/index')
+const config = require('./config')
 
 const app = new Koa()
+
+// 连接数据库
+mongoose.connect(config.mongodb)
 
 // 使用ctx.body解析中间件
 app.use(bodyParser())
