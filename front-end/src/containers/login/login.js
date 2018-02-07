@@ -5,6 +5,7 @@ import Logo from '../../components/logo/logo'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { loginIn } from '../../redux/user.redux'
+import axios from 'axios'
 
 class Login extends Component {
     constructor (props) {
@@ -17,7 +18,9 @@ class Login extends Component {
 
     handleLoginIn() {
         this.props.loginIn(this.state)
-        this.props.history.push('/register')
+        axios.get('/article', res => {
+            console.log(res)
+        })
     }
 
     changeName(value) {
