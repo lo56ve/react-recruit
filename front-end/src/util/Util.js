@@ -1,9 +1,19 @@
 var path = require('path')
 
-function fullUrl(url) {
+export function fullUrl(url) {
     return path.resolve(__dirname, url)
 }
 
-module.exports = {
-    fullUrl
+export function getCookie(param) {
+    let cookieStr = document.cookie
+    console.log(cookieStr)
+    let cookieObj = {}
+    if (cookieStr) {
+        cookieStr = cookieStr.replace(`${param}=`, '')
+        let cookieArr = cookieStr.split('&')
+        cookieArr.forEach(item => {
+            cookieObj[item.split('=')[0]] = item.split('=')[1]
+        })
+    }
+    return cookieObj
 }

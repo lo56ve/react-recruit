@@ -66,9 +66,12 @@ class Register extends Component {
         if (checkNoEmpty(name) && checkNoEmpty(pwd) && (pwd === comfirmPwd)) {
             axios.post('/user/register', {position, name, pwd})
                 .then(res => {
-                    if (res.status === 200) {
-                        Toast.success('注册成功', 1)
-                        this.props.history.replace('/home/personList')
+                    console.log(res)
+                    if (res.data.status === '1') {
+                        Toast.success(res.data.msg, 1)
+                        this.props.history.replace('/personInfo')
+                    } else {
+                        Toast.fail(res.data.msg, 2)
                     }
                 })
         }

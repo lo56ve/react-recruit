@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { NavBar } from 'antd-mobile'
 import './navbarTop.scss'
+import { getCookie } from '../../util/Util'
 
 class NavbarTop extends Component {
     constructor(props){

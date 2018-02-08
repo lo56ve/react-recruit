@@ -21,14 +21,19 @@ class Login extends Component {
     }
 
     handleLoginIn() {
-
+        axios.post('/user/login', this.state)
+             .then(res => {
+                 if (res.data.status === '1') {
+                    Toast.success(res.data.msg, 1)
+                    this.props.history.push('/personInfo')
+                 } else {
+                    Toast.fail(res.data.msg, 2)
+                 }
+             })
     }
 
     // 改变state的值
     changeValue(type, value) {
-        this.setState({
-            type: value
-        })
         switch(type) {
             case 'name':
                 this.setState({
