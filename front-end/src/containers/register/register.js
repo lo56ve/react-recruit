@@ -23,32 +23,8 @@ class Register extends Component {
 
     changeValue(type, value) {
         this.setState({
-            type: value
+            [type]: value
         })
-        switch(type) {
-            case 'position':
-                this.setState({
-                    position: value
-                })
-                break
-            case 'name':
-                this.setState({
-                    name: value
-                })
-                break
-            case 'pwd':
-                this.setState({
-                    pwd: value
-                })
-                break
-            case 'comfirmPwd':
-                this.setState({
-                    comfirmPwd: value
-                })
-                break
-            default:
-                console.log(type)
-        }
     }
 
     handleRegister() {

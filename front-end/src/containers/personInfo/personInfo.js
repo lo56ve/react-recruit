@@ -3,6 +3,7 @@ import { NavBar, WhiteSpace, InputItem, TextareaItem, List, Button, Toast } from
 import './personInfo.scss'
 import AvatarSelector from '../../components/avatar-selector/avatar-selector'
 import { getCookie } from '../../util/Util'
+import axios from 'axios'
 
 class PersonInfo extends Component {
     constructor (props) {
@@ -32,43 +33,18 @@ class PersonInfo extends Component {
 
     // 改变state的值
     changeValue(type, value) {
-        // switch(type) {
-        //     case 'jobWant':
-        //         this.setState({
-        //             jobWant: value
-        //         })
-        //         break
-        //     case 'intro':
-        //         this.setState({
-        //             intro: value
-        //         })
-        //         break
-        //     case 'jobInvite':
-        //         this.setState({
-        //             jobInvite: value
-        //         })
-        //         break
-        //     case 'company':
-        //         this.setState({
-        //             company: value
-        //         })
-        //         break
-        //     case 'demand':
-        //         this.setState({
-        //             demand: value
-        //         })
-        //         break
-        //     case 'jobpay':
-        //         this.setState({
-        //             jobpay: value
-        //         })
-        //         break
-        //     default:
-        //         console.log(type)
-        // }
         this.setState({
             [type]: value
         })
+    }
+
+    saveInfo() {
+        let {jobInvite, company, jobpay, demand, jobWant, intro, status} = this.state
+        let param = status === 'boss' ? {jobInvite, company, jobpay, demand} : {jobWant, intro}
+        axios.post('/user/setPersonInfo', param)
+            .then(res => {
+                console.log(res)
+            })
     }
 
     render () {
@@ -80,18 +56,20 @@ class PersonInfo extends Component {
                     title="个人简介"
                     autoHeight
                     value={this.state.intro}
+                    onChange={value => {this.changeValue('intro', value)}}
                     rows={5}></TextareaItem>
             </List>
         ) : (
             <List>
-                <InputItem placeholder="" value={this.state.jobInvite}>招聘职位</InputItem>
-                <InputItem placeholder="" value={this.state.company}>公司名称</InputItem>
-                <InputItem placeholder="" value={this.state.jobpay}>薪资范围</InputItem>
+                <InputItem placeholder="" value={this.state.jobInvite} onChange={value => {this.changeValue('jobInvite', value)}}>招聘职位</InputItem>
+                <InputItem placeholder="" value={this.state.company} onChange={value => {this.changeValue('company', value)}}>公司名称</InputItem>
+                <InputItem placeholder="" value={this.state.jobpay} onChange={value => {this.changeValue('jobpay', value)}}>薪资范围</InputItem>
                 <TextareaItem
                     placeholder="" 
                     title="职位要求"
                     autoHeight
                     value={this.state.demand}
+                    onChange={value => {this.changeValue('demand', value)}}
                     rows={5}></TextareaItem>
             </List>
         )
@@ -105,7 +83,7 @@ class PersonInfo extends Component {
                 <WhiteSpace />
                 {info}
                 <WhiteSpace size="lg"/>
-                <Button type="primary">保存</Button>
+                <Button type="primary" onClick={() => {this.saveInfo()}}>保存</Button>
             </div>
         )
     }

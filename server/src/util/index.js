@@ -1,3 +1,4 @@
+// 设置cookie
 exports.setCookie = function (ctx, param) {
     let paramStr = ''
     for (item in param) {

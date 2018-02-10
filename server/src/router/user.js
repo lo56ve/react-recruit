@@ -48,12 +48,23 @@ user.post('/login', async (ctx, next) => {
 })
 
 user.post('/setPersonInfo', async (ctx, next) => {
+    console.log(ctx.session.user)
     if (ctx.session.user) {
-        let user = UserModel.findOne({name: ctx.session.user.name})
-        UserModel.findOneAndUpdate({name: ctx.session.user.name}, {...user, ...ctx.request.body}, (err, res) => {
-            console.log(res)
+        let user = await UserModel.findOne({name: ctx.session.user.name})
+        let updateParam = {}
+        if (ctx.session.user.position === 'boss') {
+            let { jobInvite, company, jobpay, demand } = ctx.request.body
+            updateParam = { jobInvite, company, jobpay, demand }
+        } else {
+            let { jobWant, intro } = ctx.request.body
+            updateParam = { jobWant, intro }
+        }
+        await UserModel.findOneAndUpdate({name: ctx.session.user.name}, updateParam, (err, res) => {
+            ctx.body = err ? {status: '0', msg: '系统出错，稍后重试'} : {status: '1', msg: '信息保存成功'}
         })
     } else {
+        // 如果服务器检测没有登录，清除cookie重新登录
+        ctx.cookies.set('user', '', {signed: false, maxAge: 0})
         ctx.body = {status: '0', msg: '账号登录已失效，请重新登录'}
     }
 })

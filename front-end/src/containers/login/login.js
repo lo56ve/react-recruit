@@ -34,20 +34,9 @@ class Login extends Component {
 
     // 改变state的值
     changeValue(type, value) {
-        switch(type) {
-            case 'name':
-                this.setState({
-                    name: value
-                })
-                break
-            case 'pwd':
-                this.setState({
-                    pwd: value
-                })
-                break
-            default:
-                console.log(type)
-        }
+        this.setState({
+            [type]: value
+        })
     }
 
     render () {
