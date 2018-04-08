@@ -25,7 +25,11 @@ class Login extends Component {
              .then(res => {
                  if (res.data.status === '1') {
                     Toast.success(res.data.msg, 1)
-                    this.props.history.push('/personInfo')
+                    if (res.data.hasintro) {
+                        this.props.history.push('/home')
+                    } else {
+                        this.props.history.push('/personInfo')
+                    }
                  } else {
                     Toast.fail(res.data.msg, 2)
                  }

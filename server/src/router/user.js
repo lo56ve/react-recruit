@@ -36,7 +36,7 @@ user.post('/login', async (ctx, next) => {
         ctx.body = {status: '0', msg: '用户不存在'}
     } else {
         if (user.pwd === pwd) {
-            ctx.body = {status: '1', msg: '登录成功'}
+            ctx.body = (user.intro.length > 0 && user.jobWant.length > 0) ? {status: '1', msg: '登录成功', hasintro: true} : {status: '1', msg: '登录成功', hasintro: false}
             // 设置保持登录的session
             ctx.session.user = {name, position: user.position}
             // 设置cookie
