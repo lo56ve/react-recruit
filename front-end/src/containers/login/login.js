@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { List, InputItem, WingBlank, Button, WhiteSpace, Toast } from 'antd-mobile'
 import './login.scss'
 import Logo from '../../components/logo/logo'
-import { bindActionCreators } from 'redux'
+// import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { loginIn } from '../../redux/user.redux'
 import axios from 'axios'
@@ -24,9 +24,11 @@ class Login extends Component {
         axios.post('/user/login', this.state)
              .then(res => {
                  if (res.data.status === '1') {
+                    // 提交redux action
+                    this.props.onLoginIn({user: this.state.name, pwd: this.state.pwd, position: res.data.position})
                     Toast.success(res.data.msg, 1)
                     if (res.data.hasintro) {
-                        this.props.history.push('/home')
+                        this.props.history.push('/home/personList')
                     } else {
                         this.props.history.push('/personInfo')
                     }
@@ -64,13 +66,15 @@ class Login extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {info: state}
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
-        loginIn: bindActionCreators(loginIn, dispatch)
+        onLoginIn: param => {
+            dispatch(loginIn(param))
+        }
     }
 }
 

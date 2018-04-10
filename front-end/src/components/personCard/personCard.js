@@ -6,13 +6,10 @@ import { WhiteSpace, WingBlank, Card } from 'antd-mobile'
 class PersonCard extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            status: 'seeker'
-        }
     }
 
     render () {
-        const card = this.state.status === 'boss' ? 
+        const card = this.props.status === 'boss' ? 
                     (<Card>
                         <Card.Header
                             title = {this.props.persons.name}

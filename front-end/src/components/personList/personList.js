@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import './persionList.scss'
+import {connect} from 'react-redux'
 
 import PersonCard from '../../components/personCard/personCard'
 
 class PersionList extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props)
         this.state = {
             persons: [
@@ -17,17 +18,28 @@ class PersionList extends Component {
                 {name: '腾讯hr', avatar: '../components/img/girl.png', job: 'java开发', company: '腾讯', money: '12k', demand: '熟练java'},
                 {name: '百度hr', avatar: '../components/img/girl.png', job: 'web开发', company: '百度', money: '13k', demand: '熟练web'}
             ],
-            status: 'seeker'
-        }
+            status: ''
+        },
+        this.changeValue = this.changeValue.bind(this)
+    }
+
+    changeValue(type, value) {
+        this.setState({
+            [type]: value
+        })
+    }
+
+    componentDidMount () {
+        this.changeValue('status', this.props.userInfo.position)
     }
 
     render () {
         const cards = this.state.status === 'boss' ? 
                         this.state.persons.map((item, index) => (
-                            <PersonCard persons = {item} key = {index}/>
+                            <PersonCard persons={item} key={index} status={this.state.status}/>
                         )) : 
                         this.state.jobs.map((item, index) => (
-                            <PersonCard jobs = {item} key = {index}/>
+                            <PersonCard jobs={item} key={index} status={this.state.status}/>
                         ))
         return (
             <div>
@@ -37,4 +49,10 @@ class PersionList extends Component {
     }
 }
 
-export default PersionList
+const mapStateToProps = state => {
+    return {userInfo: state}
+}
+
+export default connect(
+    mapStateToProps
+)(PersionList)

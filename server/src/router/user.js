@@ -32,11 +32,12 @@ user.post('/login', async (ctx, next) => {
     }
     let {name, pwd} = ctx.request.body
     let user = await UserModel.findOne({name: name})
-    if (user.length === 0) {
+    if (user === null) {
         ctx.body = {status: '0', msg: '用户不存在'}
     } else {
         if (user.pwd === pwd) {
-            ctx.body = (user.intro.length > 0 && user.jobWant.length > 0) ? {status: '1', msg: '登录成功', hasintro: true} : {status: '1', msg: '登录成功', hasintro: false}
+            let intro = user.position === 'seeker' ? (user.intro.length > 0 && user.jobWant.length > 0) : (user.demand.length > 0 && user.jobpay.length > 0 && user.company.length > 0 && user.jobInvite.length > 0)
+            ctx.body = intro ? {status: '1', msg: '登录成功', hasintro: true, position: user.position} : {status: '1', msg: '登录成功', hasintro: false}
             // 设置保持登录的session
             ctx.session.user = {name, position: user.position}
             // 设置cookie
@@ -59,7 +60,7 @@ user.post('/setPersonInfo', async (ctx, next) => {
             let { jobWant, intro } = ctx.request.body
             updateParam = { jobWant, intro }
         }
-        await UserModel.findOneAndUpdate({name: ctx.session.user.name}, updateParam, (err, res) => {
+        UserModel.findOneAndUpdate({name: ctx.session.user.name}, updateParam, (err, res) => {
             ctx.body = err ? {status: '0', msg: '系统出错，稍后重试'} : {status: '1', msg: '信息保存成功'}
         })
     } else {

@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { List, InputItem, WingBlank, Button, WhiteSpace, Radio, Toast } from 'antd-mobile'
 import Logo from '../../components/logo/logo'
 import './register.scss'
-import store from '../../store/store'
-import { bindActionCreators } from 'redux'
+// import store from '../../store/store'
+// import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { register } from '../../redux/user.redux'
+import { loginIn } from '../../redux/user.redux'
 import axios from 'axios'
 
 const RadioItem = Radio.RadioItem
@@ -86,7 +86,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch =>{
     return {
-        register: bindActionCreators(register, dispatch)
+        onRegister: param => {
+            dispatch(loginIn(param))
+        }
     }
 }
 

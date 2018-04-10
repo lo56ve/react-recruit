@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom' 
 import './home.scss'
+import { connect } from 'react-redux'
 
 import NavbarLink from '../../components/navbarLink/navbarLink'
 import PersonList from '../../components/personList/personList'
@@ -8,9 +9,9 @@ import User from '../../components/user/user'
 import NavbarTop from '../../components/navbarTop/navbarTop'
 
 class Home extends Component {
-    // constructor(props){
-    //     super(props)
-    // }
+    constructor(props){
+        super(props)
+    }
 
     render() {
         return (
@@ -28,4 +29,10 @@ class Home extends Component {
     }
 }
 
-export default Home
+const mapStateToProps = state => {
+    return {userInfo: state}
+}
+
+export default connect(
+    mapStateToProps
+)(Home)

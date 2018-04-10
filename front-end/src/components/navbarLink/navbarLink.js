@@ -13,7 +13,7 @@ class NavbarLink extends Component {
                 {title: '消息列表', value: 'msg'},
                 {title: '个人中心', value: 'user'}
             ],
-            selectTab: 'home'
+            selectTab: 'boss'
         }
     }
 
