@@ -49,7 +49,6 @@ user.post('/login', async (ctx, next) => {
 })
 
 user.post('/setPersonInfo', async (ctx, next) => {
-    console.log(ctx.session.user)
     if (ctx.session.user) {
         let user = await UserModel.findOne({name: ctx.session.user.name})
         let updateParam = {}
