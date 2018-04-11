@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { TabBar } from 'antd-mobile'
 import './navbarLink.scss'
+import { getCookie } from '../../util/Util'
 
 const Item = TabBar.Item
 
@@ -8,13 +9,32 @@ class NavbarLink extends Component {
     constructor(props){
         super(props)
         this.state = {
+            selectTab: '',
+            status: '',
             navData: [
-                {title: 'BOSS列表', value: 'boss'},
+                {title: `boss列表`, value: 'boss'},
                 {title: '消息列表', value: 'msg'},
                 {title: '个人中心', value: 'user'}
-            ],
-            selectTab: 'boss'
+            ]
         }
+        this.changeState = this.changeState.bind(this)
+    }
+
+    changeState(type, value) {
+        this.setState({
+            [type]: value
+        })
+    }
+
+    componentDidMount() {
+        let user = getCookie('user')
+        this.changeState('status', user.position)
+        let newNavData = [...this.state.navData]
+        if (user.position === 'boss') {
+            newNavData.splice(0, 1, {title: `求职者列表`, value: 'job'})
+        }
+        this.changeState('navData', newNavData)
+        this.changeState('selectTab', user.position === 'boss' ? 'job' : 'boss')
     }
 
     render() {

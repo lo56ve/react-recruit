@@ -11,6 +11,20 @@ import NavbarTop from '../../components/navbarTop/navbarTop'
 class Home extends Component {
     constructor(props){
         super(props)
+        this.state = {
+            status: ''
+        }
+        this.changeValue = this.changeValue.bind(this)
+    }
+
+    componentDidMount() {
+        this.changeValue('status', this.props.userInfo.position)
+    }
+
+    changeValue(type, value) {
+        this.setState({
+            [type]: value
+        })
     }
 
     render() {

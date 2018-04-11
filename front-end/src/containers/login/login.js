@@ -28,7 +28,11 @@ class Login extends Component {
                     this.props.onLoginIn({user: this.state.name, pwd: this.state.pwd, position: res.data.position})
                     Toast.success(res.data.msg, 1)
                     if (res.data.hasintro) {
-                        this.props.history.push('/home/personList')
+                        let path = {
+                            pathname: '/home/personList',
+                            state: {status: this.props.info.position}
+                        }
+                        this.props.history.push(path)
                     } else {
                         this.props.history.push('/personInfo')
                     }

@@ -6,7 +6,7 @@ import {user} from '../redux/user.redux'
 
 const store = createStore(
     // rootReducer,
-    user,
+    user
     // 传入thunk中间件，实现异步
     // compose(
     //     applyMiddleware(thunk),

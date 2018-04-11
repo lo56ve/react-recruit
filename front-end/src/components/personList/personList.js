@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import './persionList.scss'
-import {connect} from 'react-redux'
 
 import PersonCard from '../../components/personCard/personCard'
 
-class PersionList extends Component {
+class PersonList extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -19,18 +18,18 @@ class PersionList extends Component {
                 {name: '百度hr', avatar: '../components/img/girl.png', job: 'web开发', company: '百度', money: '13k', demand: '熟练web'}
             ],
             status: ''
-        },
+        }
         this.changeValue = this.changeValue.bind(this)
+    }
+
+    componentDidMount() {
+        this.changeValue('status', this.props.history.location.state.status)
     }
 
     changeValue(type, value) {
         this.setState({
             [type]: value
         })
-    }
-
-    componentDidMount () {
-        this.changeValue('status', this.props.userInfo.position)
     }
 
     render () {
@@ -49,10 +48,4 @@ class PersionList extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {userInfo: state}
-}
-
-export default connect(
-    mapStateToProps
-)(PersionList)
+export default PersonList
