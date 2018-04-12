@@ -59,14 +59,8 @@ user.post('/setPersonInfo', async (ctx, next) => {
             let { jobWant, intro } = ctx.request.body
             updateParam = { jobWant, intro }
         }
-        // let a = await UserModel.findOneAndUpdate({name: ctx.session.user.name}, updateParam)
-        // ctx.body = a
-        // new Promise((resolve, reject) => {
-        //     let a = UserModel.findOneAndUpdate({name: ctx.session.user.name}, updateParam)
-        //     console.log(a)
-        // })
         try {
-            let res = await UserModel.findOneAndUpdate({name: ctx.session.user.name})
+            let res = await UserModel.findOneAndUpdate({name: ctx.session.user.name}, updateParam)
             if (res) {
                 ctx.body = {status: '1', msg: '信息保存成功'}
             }

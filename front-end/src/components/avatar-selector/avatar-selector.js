@@ -5,18 +5,13 @@ import './avatar-selector.scss'
 class AvatarSelector extends Component {
     constructor (props) {
         super(props)
-        this.state = {
-            select: '',
-            hasAvatar: false
-        }
+        super(props)
         this.onSelectAvatar = this.onSelectAvatar.bind(this)
     }
 
     onSelectAvatar (item) {
-        this.setState({
-            select: item.icon,
-            hasAvatar: true
-        })
+        this.props.changeValue('select', item.icon)
+        this.props.changeValue('hasAvatar', true)
     }
 
     render () {
@@ -25,9 +20,9 @@ class AvatarSelector extends Component {
             text: item
         }))
 
-        const gridHeader = this.state.hasAvatar ? (
+        const gridHeader = this.props.hasAvatar ? (
             <div className="gridHeader">
-                已选择的头像是：<img src={this.state.select} alt=""/>
+                已选择的头像是：<img src={this.props.select} alt=""/>
             </div>
         ) : <div className="gridHeader">请选择你的头像：</div>
 

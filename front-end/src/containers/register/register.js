@@ -42,7 +42,6 @@ class Register extends Component {
         if (checkNoEmpty(name) && checkNoEmpty(pwd) && (pwd === comfirmPwd)) {
             axios.post('/user/register', {position, name, pwd})
                 .then(res => {
-                    console.log(res)
                     if (res.data.status === '1') {
                         Toast.success(res.data.msg, 1)
                         this.props.history.replace('/personInfo')

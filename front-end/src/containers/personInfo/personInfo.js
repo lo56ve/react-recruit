@@ -15,8 +15,11 @@ class PersonInfo extends Component {
             jobInvite: '',
             company: '',
             jobpay: '',
-            demand: ''
+            demand: '',
+            select: '',
+            hasAvatar: false
         }
+        this.changeValue = this.changeValue.bind(this)
     }
 
     componentDidMount() {
@@ -88,7 +91,7 @@ class PersonInfo extends Component {
                 <NavBar mode="dark">
                     {this.state.status === 'seeker' ? '求职者' : 'boss'}完善信息
                 </NavBar>
-                <AvatarSelector />
+                <AvatarSelector changeValue={this.changeValue} select={this.state.select} hasAvatar={this.state.hasAvatar}/>
                 <WhiteSpace />
                 {info}
                 <WhiteSpace size="lg"/>
