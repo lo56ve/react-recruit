@@ -6,7 +6,6 @@ export function fullUrl(url) {
 
 export function getCookie(param) {
     let cookieStr = document.cookie
-    console.log(cookieStr)
     let cookieObj = {}
     if (cookieStr) {
         cookieStr = cookieStr.replace(`${param}=`, '')

@@ -4,9 +4,6 @@ import './personCard.scss'
 import { WhiteSpace, WingBlank, Card } from 'antd-mobile'
 
 class PersonCard extends Component {
-    constructor(props) {
-        super(props)
-    }
 
     render () {
         const card = this.props.status === 'boss' ? 

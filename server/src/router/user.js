@@ -59,9 +59,21 @@ user.post('/setPersonInfo', async (ctx, next) => {
             let { jobWant, intro } = ctx.request.body
             updateParam = { jobWant, intro }
         }
-        UserModel.findOneAndUpdate({name: ctx.session.user.name}, updateParam, (err, res) => {
-            ctx.body = err ? {status: '0', msg: '系统出错，稍后重试'} : {status: '1', msg: '信息保存成功'}
-        })
+        // let a = await UserModel.findOneAndUpdate({name: ctx.session.user.name}, updateParam)
+        // ctx.body = a
+        // new Promise((resolve, reject) => {
+        //     let a = UserModel.findOneAndUpdate({name: ctx.session.user.name}, updateParam)
+        //     console.log(a)
+        // })
+        try {
+            let res = await UserModel.findOneAndUpdate({name: ctx.session.user.name})
+            if (res) {
+                ctx.body = {status: '1', msg: '信息保存成功'}
+            }
+        } catch (err) {
+            ctx.body = {status: '0', msg: '系统出错，稍后重试'}
+        }
+
     } else {
         // 如果服务器检测没有登录，清除cookie重新登录
         ctx.cookies.set('user', '', {signed: false, maxAge: 0})

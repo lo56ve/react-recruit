@@ -43,7 +43,16 @@ class PersonInfo extends Component {
         let param = status === 'boss' ? {jobInvite, company, jobpay, demand} : {jobWant, intro}
         axios.post('/user/setPersonInfo', param)
             .then(res => {
-                console.log(res)
+                if(res.status === 200 && res.data.status === '1') {
+                    Toast.success(res.data.msg, 1)
+                    let path = {
+                        pathname: '/home/personList',
+                        state: {status: this.state.status}
+                    }
+                    this.props.history.replace(path)
+                } else {
+                    Toast.fail(res.data.msg, 1)
+                }
             })
     }
 
