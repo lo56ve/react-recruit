@@ -9,16 +9,17 @@ const user = new Router()
 
 user.post('/register', async (ctx, next) => {
     let {name, pwd, position} = ctx.request.body
+    pwd = util.textMd5(pwd)
     let userName = await UserModel.find({name: name})
     if (userName.length === 0) {
-        let userInfo = new UserModel(ctx.request.body)
+        let userInfo = new UserModel({name, pwd, position})
         await userInfo.save((err, res) => {
             if (err) {
                 ctx.body = {status: '0', msg: '系统出错，稍后重试'}
             }
         })
         ctx.body = {status: '1', msg: '注册成功'}
-        ctx.session.user = {name, position}
+        ctx.session[name] = {name, position}
         util.setCookie(ctx, {name, position})
     } else {
         ctx.body = {status: '0', msg: '用户名已存在'}
@@ -26,20 +27,20 @@ user.post('/register', async (ctx, next) => {
 })
 
 user.post('/login', async (ctx, next) => {
-    if (ctx.session.user) {
+    let {name, pwd} = ctx.request.body
+    if (ctx.session[name]) {
         ctx.body = {status: '0', msg: '用户已登录'}
         return
     }
-    let {name, pwd} = ctx.request.body
     let user = await UserModel.findOne({name: name})
     if (user === null) {
         ctx.body = {status: '0', msg: '用户不存在'}
     } else {
-        if (user.pwd === pwd) {
-            let intro = user.position === 'seeker' ? (user.intro.length > 0 && user.jobWant.length > 0) : (user.demand.length > 0 && user.jobpay.length > 0 && user.company.length > 0 && user.jobInvite.length > 0)
+        if (util.textMd5(user.pwd) === pwd) {
+            let intro = user.position === 'seeker' ? (user.intro && user.intro.length > 0 && user.jobWant && user.jobWant.length > 0) : (user.demand && user.demand.length > 0 && user.jobpay && user.jobpay.length > 0 && user.company && user.company.length > 0 && user.jobInvite && user.jobInvite.length > 0)
             ctx.body = intro ? {status: '1', msg: '登录成功', hasintro: true, position: user.position} : {status: '1', msg: '登录成功', hasintro: false}
             // 设置保持登录的session
-            ctx.session.user = {name, position: user.position}
+            ctx.session[name] = {name, position: user.position}
             // 设置cookie
             util.setCookie(ctx, {name, position: user.position})
         } else {
@@ -47,6 +48,7 @@ user.post('/login', async (ctx, next) => {
         }
     }
 })
+
 
 user.post('/setPersonInfo', async (ctx, next) => {
     if (ctx.session.user) {

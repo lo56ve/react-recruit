@@ -55,6 +55,9 @@ class PersonInfo extends Component {
                     this.props.history.replace(path)
                 } else {
                     Toast.fail(res.data.msg, 1)
+                    setTimeout(() => {
+                        this.props.history.replace('/login')
+                    }, 1000)
                 }
             })
     }

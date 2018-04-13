@@ -1,3 +1,6 @@
+const crypto = require('crypto')
+const md5 = crypto.createHash('md5')
+
 // 设置cookie
 exports.setCookie = function (ctx, param) {
     let paramStr = ''
@@ -15,4 +18,10 @@ exports.setCookie = function (ctx, param) {
             overwrite: false        // 是否允许重写
         }
     )
+}
+
+// md5加密
+exports.textMd5 = function(text) {
+    md5.update(text)
+    return md5.digest('hex')
 }
