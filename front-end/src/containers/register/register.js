@@ -43,6 +43,8 @@ class Register extends Component {
             axios.post('/user/register', {position, name, pwd})
                 .then(res => {
                     if (res.data.status === '1') {
+                        // 将token存储到sessionStorage
+                        window.sessionStorage.setItem('token', res.data.token)
                         Toast.success(res.data.msg, 1)
                         this.props.history.replace('/personInfo')
                     } else {

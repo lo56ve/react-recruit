@@ -42,9 +42,11 @@ class PersonInfo extends Component {
     }
 
     saveInfo() {
-        let {jobInvite, company, jobpay, demand, jobWant, intro, status} = this.state
+        let {jobInvite, company, jobpay, demand, jobWant, intro, status, select} = this.state
         let param = status === 'boss' ? {jobInvite, company, jobpay, demand} : {jobWant, intro}
-        axios.post('/user/setPersonInfo', param)
+        let token = window.sessionStorage.getItem('token')
+        console.log(param)
+        axios.post('/user/setPersonInfo', param, {headers: {Authorization: `Bearer ${token}`}})
             .then(res => {
                 if(res.status === 200 && res.data.status === '1') {
                     Toast.success(res.data.msg, 1)

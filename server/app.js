@@ -5,9 +5,12 @@ const bodyParser = require('koa-bodyparser')
 const Router = require('koa-router')
 const mongoose = require('mongoose')
 const session = require('koa-session-minimal')
+const jwtKoa= require('koa-jwt')
+const jwt = require('jsonwebtoken')
 
 const router = require('./src/router/index')
 const config = require('./config')
+const util = require('./src/util')
 
 const app = new Koa()
 
@@ -16,6 +19,11 @@ mongoose.connect(config.mongodb)
 
 // 使用ctx.body解析中间件
 app.use(bodyParser())
+
+// 使用token验证
+app.use(jwtKoa({secret: util.secret}).unless({
+    path: [/^\/user\/login/, /^\/user\/register/]
+}))
 
 // 使用session保持登录，保存到内存中
 app.use(session({

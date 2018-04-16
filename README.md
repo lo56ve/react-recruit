@@ -10,9 +10,17 @@
 
 #### server(后端)
 
+- 采用koa2后端框架，数据库采用mongodb
+- 使用session和cookie保持登录，使用token验证请求权限（其实用其一即可，项目仅用于尝试）
 - 打开系统命令行(管理者模式)，执行
 
     mongod --dbpath "D:\mongodb\data\db" --logpath "D:\mongodb\logs\log.txt"  --install -serviceName "MongoDB"  
 
 - 并在命令行中执行`net start`启动mongodb
 - 执行`npm run start`运行程序
+
+#### 后续
+
+- 聊天soket
+- 个人中心
+- 岗位求职

@@ -1,5 +1,5 @@
 const crypto = require('crypto')
-const md5 = crypto.createHash('md5')
+const jwt = require('jsonwebtoken')
 
 // 设置cookie
 exports.setCookie = function (ctx, param) {
@@ -22,6 +22,16 @@ exports.setCookie = function (ctx, param) {
 
 // md5加密
 exports.textMd5 = function(text) {
+    const md5 = crypto.createHash('md5')
     md5.update(text)
-    return md5.digest('hex')
+    let passord = md5.digest('hex')
+    return passord
+}
+
+// token加密密钥
+exports.secret = 'recruiment react webapp'
+
+// 解密，获取payload
+exports.verify = function(item, secret) {
+    return jwt.verify(item, secret)
 }

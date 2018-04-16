@@ -26,6 +26,8 @@ class Login extends Component {
                  if (res.data.status === '1') {
                     // 提交redux action
                     this.props.onLoginIn({user: this.state.name, pwd: this.state.pwd, position: res.data.position})
+                    // 将token存储到sessionStorage
+                    window.sessionStorage.setItem('token', res.data.token)
                     Toast.success(res.data.msg, 1)
                     if (res.data.hasintro) {
                         let path = {
