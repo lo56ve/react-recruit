@@ -57,7 +57,7 @@ user.post('/login', async (ctx, next) => {
 
 user.post('/setPersonInfo', async (ctx, next) => {
     // 获取token
-    const token = ctx.header.authorization
+    const token = ctx.header.authorization || ''
     if (token) {
         const userinfo = util.verify(token.split(' ')[1], util.secret)
         let user = await UserModel.findOne({name: userinfo.name})
@@ -77,7 +77,6 @@ user.post('/setPersonInfo', async (ctx, next) => {
         } catch (err) {
             ctx.body = {status: '0', msg: '系统出错，稍后重试'}
         }
-
     } else {
         // 如果服务器检测没有登录，清除cookie重新登录
         ctx.cookies.set('user', '', {signed: false, maxAge: 0})

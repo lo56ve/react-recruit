@@ -44,8 +44,7 @@ class PersonInfo extends Component {
     saveInfo() {
         let {jobInvite, company, jobpay, demand, jobWant, intro, status, select} = this.state
         let param = status === 'boss' ? {jobInvite, company, jobpay, demand} : {jobWant, intro}
-        let token = window.sessionStorage.getItem('token')
-        console.log(param)
+        let token = window.sessionStorage.getItem('token') || ''
         axios.post('/user/setPersonInfo', param, {headers: {Authorization: `Bearer ${token}`}})
             .then(res => {
                 if(res.status === 200 && res.data.status === '1') {
@@ -61,6 +60,12 @@ class PersonInfo extends Component {
                         this.props.history.replace('/login')
                     }, 1000)
                 }
+            })
+            .catch(err => {
+                Toast.fail('请重新登录', 1)
+                    setTimeout(() => {
+                        this.props.history.replace('/login')
+                    }, 1000)
             })
     }
 
