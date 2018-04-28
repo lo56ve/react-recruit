@@ -17,6 +17,7 @@ class Routes extends Component {
             <BrowserRouter>
                 <div>
                     <Switch>
+                        <Route path="/" component={Login} />
                         <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />
                         <Route path="/personInfo" component={PersonInfo} />
