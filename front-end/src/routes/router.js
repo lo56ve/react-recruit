@@ -17,11 +17,11 @@ class Routes extends Component {
             <BrowserRouter>
                 <div>
                     <Switch>
-                        <Route path="/" component={Login} />
                         <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />
                         <Route path="/personInfo" component={PersonInfo} />
                         <Route path="/home" component={Home} />
+                        <Route exact component={Login}></Route>
                     </Switch>
                 </div>
             </BrowserRouter>

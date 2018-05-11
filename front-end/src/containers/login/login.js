@@ -15,7 +15,7 @@ class Login extends Component {
             pwd: ''
         }
     }
-
+    
     hangleRegister() {
         this.props.history.replace('/register')
     }

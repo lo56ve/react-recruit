@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { TabBar } from 'antd-mobile'
 import './navbarLink.scss'
 import { getCookie } from '../../util/Util'
+import {withRouter} from 'react-router-dom'
 
 const Item = TabBar.Item
 
@@ -12,9 +13,9 @@ class NavbarLink extends Component {
             selectTab: '',
             status: '',
             navData: [
-                {title: `boss列表`, value: 'boss'},
-                {title: '消息列表', value: 'msg'},
-                {title: '个人中心', value: 'user'}
+                {title: `boss列表`, value: 'personList', name: 'boss'},
+                {title: '消息列表', value: 'msg', name: 'msg'},
+                {title: '个人中心', value: 'user', name: 'user'}
             ]
         }
         this.changeState = this.changeState.bind(this)
@@ -31,10 +32,10 @@ class NavbarLink extends Component {
         this.changeState('status', user.position)
         let newNavData = [...this.state.navData]
         if (user.position === 'boss') {
-            newNavData.splice(0, 1, {title: `求职者列表`, value: 'job'})
+            newNavData.splice(0, 1, {title: `求职者列表`, value: 'personList', name: 'job'})
         }
         this.changeState('navData', newNavData)
-        this.changeState('selectTab', user.position === 'boss' ? 'job' : 'boss')
+        this.changeState('selectTab', 'personList')
     }
 
     render() {
@@ -49,13 +50,14 @@ class NavbarLink extends Component {
                             <Item
                                 title={item.title}
                                 key={index}
-                                icon = {{uri: require(`./img/${item.value}.png`)}}
-                                selectedIcon = {{uri: require(`./img/${item.value}-active.png`)}}
+                                icon = {{uri: require(`./img/${item.name}.png`)}}
+                                selectedIcon = {{uri: require(`./img/${item.name}-active.png`)}}
                                 selected = {this.state.selectTab === item.value}
                                 onPress = {() => {
                                     this.setState({
                                         selectTab: item.value
                                     })
+                                    this.props.history.replace(`/home/${item.value}`)
                                 }}
                             >
                             </Item>
@@ -67,4 +69,4 @@ class NavbarLink extends Component {
     }
 }
 
-export default NavbarLink
+export default withRouter(NavbarLink)
